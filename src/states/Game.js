@@ -8,7 +8,7 @@ let fKey;
 export default class GameState extends Phaser.State {
 
 	preload() {
-		this.load.image('star', 'assets/star.png');
+		this.load.image('star', 'star.png');
 	}
 
 	create() {
