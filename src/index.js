@@ -1,6 +1,6 @@
 // Import game states.
 import * as states from 'states';
-import Modules from 'polyfills/Object/entries';
+import module from 'core/module';
 
 class Game extends Phaser.Game {
 
@@ -8,7 +8,7 @@ class Game extends Phaser.Game {
 		super(800, 600, Phaser.AUTO, 'content', null);
 
   		// Dynamically add all required game states.
-		Modules(states).forEach(([key, state]) => this.state.add(key, state));
+		module(states).forEach(([key, state]) => this.state.add(key, state));
 
 		this.state.start('Boot');
 	}

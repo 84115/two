@@ -3,10 +3,10 @@ let isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIs
 let concat = Function.bind.call(Function.call, Array.prototype.concat);
 let keys = Reflect.ownKeys;
 
-if (!Object.entries) {
-    Object.entries = function entries(O) {
-        return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
-    };
-}
+let Module = Object.create({});
 
-export default Object.entries;
+Module.modules = function modules(O) {
+    return reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+};
+
+export default Module.modules;
