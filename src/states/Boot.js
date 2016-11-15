@@ -9,7 +9,7 @@
 
 import assets from '../assets';
 
-class BootState extends Phaser.State {
+export default class BootState extends Phaser.State {
 
   preload() {
     // Point the Phaser Asset Loader to where your game assets live.
@@ -17,7 +17,9 @@ class BootState extends Phaser.State {
 
     // Initialize physics engines here. Remember that Phaser builds including
     // Arcade Physics have it enabled by default.
-    //this.physics.startSystem(Phaser.Physics.P2);
+    this.game.physics.startSystem(Phaser.Physics.Arcade);
+
+    this.physics.arcade.gravity.y = 125;
 
     // Adjust how many pointers Phaser will check for input events.
     this.input.maxPointers = 2;
@@ -27,7 +29,7 @@ class BootState extends Phaser.State {
 
     // Adjust the scaling mode of the game canvas.
     // Example: If you're developing a pixel-art game, set it to 'USER_SCALE'.
-    this.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
+    this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
 
     // When using 'USER_SCALE' scaling mode, use this method to adjust the
     // scaling factor.
@@ -35,7 +37,7 @@ class BootState extends Phaser.State {
 
     // Uncomment the following line to adjust the rendering of the canvas to
     // crisp graphics. Great for pixel-art!
-    //Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
+    Phaser.Canvas.setImageRenderingCrisp(this.game.canvas);
 
     // Uncomment this line to disable smoothing of textures.
     //this.stage.smoothed = false;
@@ -49,11 +51,11 @@ class BootState extends Phaser.State {
   }
 
   create() {
+    this.game.stage.backgroundColor = '#0000ff';
+
     // After applying the first adjustments and loading the splash screen
     // assets, move to the next game state.
     this.state.start('Preload');
   }
 
 }
-
-export default BootState;

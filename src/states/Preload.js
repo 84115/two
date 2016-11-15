@@ -9,10 +9,11 @@
 
 import assets from '../assets';
 
-class PreloadState extends Phaser.State {
+export default class PreloadState extends Phaser.State {
 
   preload() {
     this.showSplashScreen();
+
     this.load.pack('game', null, assets);
   }
 
@@ -28,9 +29,8 @@ class PreloadState extends Phaser.State {
 
   showSplashScreen() {
     this.add.image(0, 0, 'splash-screen');
+
     this.load.setPreloadSprite(this.add.image(82, 282, 'progress-bar'));
   }
 
 }
-
-export default PreloadState;

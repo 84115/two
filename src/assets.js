@@ -56,6 +56,9 @@ export default {
 
   // -- General assets, used throughout the game.
   game: [{
+    key: 'star',
+    type: 'image'
+  }, {
     key: 'phaser',
     type: 'image'
   // }, {
