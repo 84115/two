@@ -46,19 +46,27 @@
 
 export default {
   // -- Splash screen assets, displayed during the 'Preload' state.
-  boot: [{
+  boot: [
+  {
     key: 'splash-screen',
     type: 'image'
-  }, {
+  },
+  {
     key: 'progress-bar',
     type: 'image'
   }],
 
   // -- General assets, used throughout the game.
-  game: [{
+  game: [
+  {
+    key: 'hero',
+    type: 'image'
+  },
+  {
     key: 'star',
     type: 'image'
-  }, {
+  },
+  {
     key: 'phaser',
     type: 'image'
   // }, {
