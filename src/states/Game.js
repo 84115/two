@@ -1,27 +1,40 @@
 let sprite;
+
 let upKey;
 let downKey;
 let leftKey;
 let rightKey;
 let fKey;
 
+let bullets;
+
+let fireRate = 100;
+let nextFire = 0;
+
 // https://phaser.io/examples/v2/arcade-physics/platformer-tight
 
 export default class GameState extends Phaser.State {
 
+	preload() {
+		// game.load.image('star', 'star.png');
+	}
+
 	create() {
 		this.game.stage.backgroundColor = '#000';
+
+	    bullets = this.add.group();
+	    bullets.enableBody = true;
+	    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+	    bullets.createMultiple(50, 'star');
+	    bullets.setAll('checkWorldBounds', true);
+	    bullets.setAll('outOfBoundsKill', true);
 
 	    upKey = this.input.keyboard.addKey(Phaser.Keyboard.W);
 	    downKey = this.input.keyboard.addKey(Phaser.Keyboard.S);
 	    leftKey = this.input.keyboard.addKey(Phaser.Keyboard.A);
 	    rightKey = this.input.keyboard.addKey(Phaser.Keyboard.D);
 	    fKey = this.input.keyboard.addKey(Phaser.Keyboard.F);
-
-	    let style = { font: "65px Arial", fill: "#ff0044", align: "center" };
-	    let text = this.add.text(this.world.centerX, this.world.centerY, "Waddup!", style);
-
-	    text.anchor.set(0.5);
 
 	    sprite = this.add.sprite(0, 0, 'hero');
 
@@ -35,6 +48,11 @@ export default class GameState extends Phaser.State {
 	}
 
 	update() {
+
+	    if (this.input.activePointer.isDown)
+	    {
+	        this.fire();
+	    }
 
 	    if (upKey.isDown) {
 	        sprite.body.velocity.y = -50;
@@ -55,6 +73,21 @@ export default class GameState extends Phaser.State {
 		else {
 			sprite.body.velocity.x = 0;
 		}
+
+	}
+
+	fire() {
+
+	    if (this.time.now > nextFire && bullets.countDead() > 0)
+	    {
+	        nextFire = this.time.now + fireRate;
+
+	        var bullet = bullets.getFirstDead();
+
+	        bullet.reset(sprite.x, sprite.y);
+
+	        this.physics.arcade.moveToPointer(bullet, 300);
+	    }
 
 	}
 
