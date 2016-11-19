@@ -2,9 +2,11 @@
 import * as states from 'states';
 import module from 'core/module';
 
-class Game extends Phaser.Game {
+class Game extends Phaser.Game
+{
 
-	constructor() {
+	constructor()
+    {
 		super(800, 600, Phaser.AUTO, 'content', null);
 
   		// Dynamically add all required game states.
@@ -13,7 +15,8 @@ class Game extends Phaser.Game {
 		this.state.start('Boot');
 	}
 
-    quitGame(pointer) {
+    quitGame(pointer)
+    {
         //  Here you should destroy anything you no longer need.
         //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
 

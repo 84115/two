@@ -5,7 +5,6 @@ export default class GameState extends Phaser.State
 
 	create()
 	{
-
 		this.game.stage.backgroundColor = '#000';
 
 		this.game.world.setBounds(0, 0, 1600, 600);
@@ -15,14 +14,15 @@ export default class GameState extends Phaser.State
 	    this.dude.tint = Math.random() * 0xffffff;
 
 		this.platforms = this.add.physicsGroup();
-		this.platforms.create(100, 600, 'star');
-		this.platforms.create(200, 550, 'star');
-		this.platforms.create(300, 500, 'star');
+		this.platforms.create(200, 550, 'dude');
+		this.platforms.create(300, 500, 'dude');
+		this.platforms.create(100, 450, 'dude');
+		this.platforms.create(400, 400, 'dude');
+		this.platforms.create(500, 350, 'dude');
 		this.platforms.setAll('body.allowGravity', false);
 		this.platforms.setAll('body.immovable', true);
 
 		this.game.camera.follow(this.dude, Phaser.Camera.FOLLOW_LOCKON);
-
 	}
 
 	update()

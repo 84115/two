@@ -6,15 +6,18 @@
  * logo.
  */
 
-export default class Logo extends Phaser.Sprite {
+export default class Logo extends Phaser.Sprite
+{
 
-  constructor(game, x, y) {
+  constructor(game, x, y)
+  {
     super(game, x, y, 'phaser');
 
     this.anchor.set(0.5);
   }
 
-  update() {
+  update()
+  {
     this.angle += 0.1;
   }
 
