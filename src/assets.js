@@ -59,7 +59,7 @@ export default {
   // -- General assets, used throughout the game.
   game: [
   {
-    key: 'hero',
+    key: 'dude',
     type: 'image'
   },
   {
