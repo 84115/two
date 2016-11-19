@@ -1,4 +1,6 @@
-let sprite;
+import Hero from 'objects/Hero';
+
+let hero;
 
 let upKey;
 let downKey;
@@ -11,13 +13,11 @@ let bullets;
 let fireRate = 100;
 let nextFire = 0;
 
+var jumpTimer = 0;
+
 // https://phaser.io/examples/v2/arcade-physics/platformer-tight
 
 export default class GameState extends Phaser.State {
-
-	preload() {
-		// game.load.image('star', 'star.png');
-	}
 
 	create() {
 		this.game.stage.backgroundColor = '#000';
@@ -36,15 +36,16 @@ export default class GameState extends Phaser.State {
 	    rightKey = this.input.keyboard.addKey(Phaser.Keyboard.D);
 	    fKey = this.input.keyboard.addKey(Phaser.Keyboard.F);
 
-	    sprite = this.add.sprite(0, 0, 'hero');
+	    hero = new Hero(this, 0, 0);
+	    this.game.add.existing(hero)
 
-		this.physics.enable(sprite, Phaser.Physics.ARCADE);
+		this.physics.enable(hero, Phaser.Physics.ARCADE);
 
-		sprite.body.gravity.y = 100;
+	    hero.body.gravity.y = 1000;
+	    hero.body.maxVelocity.y = 500;
 
-	    sprite.body.bounce.y = 0.2;
-	    sprite.body.collideWorldBounds = true;
-
+	    hero.body.bounce.y = 0.2;
+	    hero.body.collideWorldBounds = true;
 	}
 
 	update() {
@@ -54,24 +55,26 @@ export default class GameState extends Phaser.State {
 	        this.fire();
 	    }
 
-	    if (upKey.isDown) {
-	        sprite.body.velocity.y = -50;
-	        sprite.y--;
-	    }
-	    else if (downKey.isDown) {
-	        sprite.y++;
+	    if (upKey.isDown)
+	    {
+
+		    if (hero.body.onFloor() && this.time.now > jumpTimer)
+		    {
+		        hero.body.velocity.y = -500;
+		        jumpTimer = this.time.now + 750;
+		    }
 	    }
 
 	    if (leftKey.isDown) {
-	    	sprite.body.velocity.x = -50;
-	        sprite.x--;
+	    	hero.body.velocity.x = -100;
+	        hero.x--;
 	    }
 	    else if (rightKey.isDown) {
-	    	sprite.body.velocity.x = 50;
-	        sprite.x++;
+	    	hero.body.velocity.x = 100;
+	        hero.x++;
 		}
 		else {
-			sprite.body.velocity.x = 0;
+			hero.body.velocity.x = 0;
 		}
 
 	}
@@ -84,7 +87,7 @@ export default class GameState extends Phaser.State {
 
 	        var bullet = bullets.getFirstDead();
 
-	        bullet.reset(sprite.x, sprite.y);
+	        bullet.reset(hero.x, hero.y);
 
 	        this.physics.arcade.moveToPointer(bullet, 300);
 	    }
