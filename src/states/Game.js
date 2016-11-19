@@ -1,20 +1,39 @@
-import Dude1 from 'objects/Dude1';
+import Dude from 'objects/Dude1';
 
 export default class GameState extends Phaser.State
 {
 
-	create() {
+	create()
+	{
 
 		this.game.stage.backgroundColor = '#000';
 
-	    this.dude1 = new Dude1(this, 0, 0, 'dude');
-	    this.game.add.existing(this.dude1);
-	    this.dude1.tint = Math.random() * 0xffffff;
+		this.game.world.setBounds(0, 0, 1600, 600);
+
+	    this.dude = new Dude(this, 0, 0, 'dude');
+	    this.game.add.existing(this.dude);
+	    this.dude.tint = Math.random() * 0xffffff;
+
+		this.platforms = this.add.physicsGroup();
+		this.platforms.create(100, 600, 'star');
+		this.platforms.create(200, 550, 'star');
+		this.platforms.create(300, 500, 'star');
+		this.platforms.setAll('body.allowGravity', false);
+		this.platforms.setAll('body.immovable', true);
+
+		this.game.camera.follow(this.dude, Phaser.Camera.FOLLOW_LOCKON);
 
 	}
 
-	update() {
-	
+	update()
+	{
+    	this.game.physics.arcade.collide(this.dude, this.platforms);
+	}
+
+	render()
+	{
+	    this.game.debug.cameraInfo(this.game.camera, 32, 32);
+    	this.game.debug.spriteCoords(this.dude, 32, 500);
 	}
 
 }

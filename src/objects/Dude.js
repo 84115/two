@@ -62,10 +62,10 @@ export default class Dude extends Phaser.Sprite
 
 		    if (this.upKey.isDown)
 			{
-			    if (this.body.onFloor() && this.game.time.now > this.jumpTimer)
+			    if (this.game.time.now > this.jumpTimer)
 			    {
 			        this.body.velocity.y = -500;
-			        this.jumpTimer = this.game.time.now + 750;
+			        this.jumpTimer = this.game.time.now + 1000;
 			    }
 			}
 
@@ -91,8 +91,8 @@ export default class Dude extends Phaser.Sprite
 			this.nextFire = this.game.time.now + this.fireRate;
 
 			this.bullet = this.bullets.getFirstDead();
-
 			this.bullet.reset(this.x, this.y);
+	    	this.bullet.tint = Math.random() * 0xffffff;
 
 			this.game.physics.arcade.moveToPointer(this.bullet, 300);
 		}
