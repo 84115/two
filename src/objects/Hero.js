@@ -1,9 +1,16 @@
 import Bullet from 'objects/Bullet';
 
+let upKey;
+let downKey;
+let leftKey;
+let rightKey;
+let fKey;
+
 let bullets;
 let fireRate = 100;
 let nextFire = 0;
 
+let jumpTimer = 0;
 /*
  * Dude
  * ====
@@ -22,6 +29,12 @@ export default class Dude extends Phaser.Sprite
 	constructor(game, x, y) {
 
 		super(game, x, y, 'hero');
+
+	    upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+	    downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+	    leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+	    rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+	    fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
 
 		bullets = this.game.add.group();
 		bullets.enableBody = true;
@@ -45,6 +58,27 @@ export default class Dude extends Phaser.Sprite
 		if (this.game.input.activePointer.isDown)
 		{
 			this.fire();
+		}
+
+	    if (upKey.isDown)
+		{
+		    if (this.body.onFloor() && this.game.time.now > jumpTimer)
+		    {
+		        this.body.velocity.y = -500;
+		        jumpTimer = this.game.time.now + 750;
+		    }
+		}
+
+	    if (leftKey.isDown) {
+	    	this.body.velocity.x = -100;
+	        this.x--;
+	    }
+	    else if (rightKey.isDown) {
+	    	this.body.velocity.x = 100;
+	        this.x++;
+		}
+		else {
+			this.body.velocity.x = 0;
 		}
 
 	}
