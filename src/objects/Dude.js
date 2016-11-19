@@ -25,6 +25,9 @@ export default class Dude extends Phaser.Sprite
 		this.fireRate = 100;
 		this.nextFire = 0;
 
+        this.health = 10;
+        this.maxHealth = this.health;
+
 	    this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
 	    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
 	    this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
@@ -50,30 +53,33 @@ export default class Dude extends Phaser.Sprite
 
 	update() {
 
-		if (this.game.input.activePointer.isDown)
+		if (this.alive)
 		{
-			this.fire();
-		}
+			if (this.game.input.activePointer.isDown)
+			{
+				this.fire();
+			}
 
-	    if (this.upKey.isDown)
-		{
-		    if (this.body.onFloor() && this.game.time.now > this.jumpTimer)
-		    {
-		        this.body.velocity.y = -500;
-		        this.jumpTimer = this.game.time.now + 750;
+		    if (this.upKey.isDown)
+			{
+			    if (this.body.onFloor() && this.game.time.now > this.jumpTimer)
+			    {
+			        this.body.velocity.y = -500;
+			        this.jumpTimer = this.game.time.now + 750;
+			    }
+			}
+
+		    if (this.leftKey.isDown) {
+		    	this.body.velocity.x = -100;
+		        this.x--;
 		    }
-		}
-
-	    if (this.leftKey.isDown) {
-	    	this.body.velocity.x = -100;
-	        this.x--;
-	    }
-	    else if (this.rightKey.isDown) {
-	    	this.body.velocity.x = 100;
-	        this.x++;
-		}
-		else {
-			this.body.velocity.x = 0;
+		    else if (this.rightKey.isDown) {
+		    	this.body.velocity.x = 100;
+		        this.x++;
+			}
+			else {
+				this.body.velocity.x = 0;
+			}
 		}
 
 	}
@@ -92,5 +98,9 @@ export default class Dude extends Phaser.Sprite
 		}
 
 	}
+
+    damage(amount) {
+        super.damage(amount);
+    }
 
 }
