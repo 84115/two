@@ -15,11 +15,9 @@ export default class Dude extends Phaser.Sprite
     {
         super(game, x, y, asset);
 
-        this.jumpTimer = 0;
+        this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
-        this.bullets;
-        this.fireRate = 100;
-        this.nextFire = 0;
+        this.jumpTimer = 0;
 
         this.health = 10;
         this.maxHealth = this.health;
@@ -30,19 +28,19 @@ export default class Dude extends Phaser.Sprite
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
 
-        this.bullets = this.game.add.group();
-        this.bullets.enableBody = true;
-        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullet = new Phaser.Sprite(this.game, 0, 0, 'star');
 
-        this.bullets.createMultiple(50, 'star');
+        this.bullets = new Phaser.Group(this.game);
+        this.bullets.enableBody = true;
+        this.bullets.createMultiple(50, this.bullet);
         this.bullets.setAll('checkWorldBounds', true);
         this.bullets.setAll('outOfBoundsKill', true);
 
-        this.game.physics.enable(this, Phaser.Physics.ARCADE);
+        this.fireRate = 100;
+        this.nextFire = 0;
 
         this.body.gravity.y = 1000;
         this.body.maxVelocity.y = 500;
-
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
     }

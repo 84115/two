@@ -63,10 +63,6 @@ export default {
     type: 'image'
   },
   {
-    key: 'pixel',
-    type: 'image'
-  },
-  {
     key: 'star',
     type: 'image'
   },
