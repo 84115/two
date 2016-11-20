@@ -28,11 +28,9 @@ export default class Dude extends Phaser.Sprite
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
 
-        this.bullet = new Phaser.Sprite(this.game, 0, 0, 'star');
-
         this.bullets = new Phaser.Group(this.game);
         this.bullets.enableBody = true;
-        this.bullets.createMultiple(50, this.bullet);
+        this.bullets.createMultiple(50, 'star');
         this.bullets.setAll('checkWorldBounds', true);
         this.bullets.setAll('outOfBoundsKill', true);
 
