@@ -14,7 +14,7 @@ export default class Bullet extends Phaser.Group
         this.nextFire = 0;
     }
 
-    fire(x, y)
+    fire(x, y, follow)
     {
         if (this.game.time.now > this.nextFire && this.countDead() > 0)
         {

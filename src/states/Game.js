@@ -1,4 +1,4 @@
-import Dude from 'objects/Dude1';
+import Dude from 'objects/Dude';
 
 export default class GameState extends Phaser.State
 {

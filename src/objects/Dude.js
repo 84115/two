@@ -43,15 +43,18 @@ export default class Dude extends Phaser.Sprite
                 }
             }
 
-            if (this.leftKey.isDown) {
+            if (this.leftKey.isDown)
+            {
                 this.body.velocity.x = -100;
                 this.x--;
             }
-            else if (this.rightKey.isDown) {
+            else if (this.rightKey.isDown)
+            {
                 this.body.velocity.x = 100;
                 this.x++;
             }
-            else {
+            else
+            {
                 this.body.velocity.x = 0;
             }
         }
@@ -69,7 +72,6 @@ export default class Dude extends Phaser.Sprite
         this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
     }
 
     setPhysics()
