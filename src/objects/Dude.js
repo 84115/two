@@ -39,7 +39,7 @@ export default class Dude extends Phaser.Sprite
                 if (this.game.time.now > this.jumpTimer)
                 {
                     this.body.velocity.y = -500;
-                    this.jumpTimer = this.game.time.now + 750;
+                    this.jumpTimer = this.game.time.now + 500;
                 }
             }
 
