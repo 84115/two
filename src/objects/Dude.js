@@ -34,12 +34,12 @@ export default class Dude extends Phaser.Sprite
                 this.bullets.fire(this.x, this.y);
             }
 
-            if (this.upKey.isDown)
+            if (this.upKey.isDown && (this.body.blocked.down || this.body.touching.down))
             {
                 if (this.game.time.now > this.jumpTimer)
                 {
                     this.body.velocity.y = -500;
-                    this.jumpTimer = this.game.time.now + 1000;
+                    this.jumpTimer = this.game.time.now + 750;
                 }
             }
 
