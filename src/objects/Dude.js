@@ -15,13 +15,9 @@ export default class Dude extends Phaser.Sprite
     {
         super(game, x, y, asset);
 
-        this.jumpTimer = 0;
-
         this.setHealth(10);
         this.setControls();
-
-        this.bullets = new Bullets(this.game);
-
+        this.setBullets();
         this.setPhysics();
     }
 
@@ -29,6 +25,7 @@ export default class Dude extends Phaser.Sprite
     {
         if (this.alive)
         {
+
             if (this.game.input.activePointer.isDown)
             {
                 this.bullets.fire(this.x, this.y);
@@ -36,21 +33,20 @@ export default class Dude extends Phaser.Sprite
 
             if (this.upKey.isDown && (this.body.blocked.down || this.body.touching.down))
             {
-                if (this.game.time.now > this.jumpTimer)
+                if (this.game.time.now)
                 {
                     this.body.velocity.y = -500;
-                    this.jumpTimer = this.game.time.now + 500;
                 }
             }
 
             if (this.leftKey.isDown)
             {
-                this.body.velocity.x = -100;
+                this.body.velocity.x = -125;
                 this.x--;
             }
             else if (this.rightKey.isDown)
             {
-                this.body.velocity.x = 100;
+                this.body.velocity.x = 125;
                 this.x++;
             }
             else
@@ -72,6 +68,11 @@ export default class Dude extends Phaser.Sprite
         this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    }
+
+    setBullets()
+    {
+        this.bullets = new Bullets(this.game);
     }
 
     setPhysics()
