@@ -1,4 +1,4 @@
-import Bullet from 'objects/Bullet';
+import Bullets from 'objects/Bullet';
 
 /*
  * Dude
@@ -28,14 +28,10 @@ export default class Dude extends Phaser.Sprite
         this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
 
-        this.bullets = new Phaser.Group(this.game);
-        this.bullets.enableBody = true;
-        this.bullets.createMultiple(50, 'star');
-        this.bullets.setAll('checkWorldBounds', true);
-        this.bullets.setAll('outOfBoundsKill', true);
+        this.bullets = new Bullets(this.game);
 
-        this.fireRate = 100;
-        this.nextFire = 0;
+        this.bullets.fireRate = 100;
+        this.bullets.nextFire = 0;
 
         this.body.gravity.y = 1000;
         this.body.maxVelocity.y = 500;
@@ -77,9 +73,9 @@ export default class Dude extends Phaser.Sprite
 
     fire()
     {
-        if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0)
+        if (this.game.time.now > this.bullets.nextFire && this.bullets.countDead() > 0)
         {
-            this.nextFire = this.game.time.now + this.fireRate;
+            this.bullets.nextFire = this.game.time.now + this.bullets.fireRate;
 
             this.bullet = this.bullets.getFirstDead();
             this.bullet.reset(this.x, this.y);
