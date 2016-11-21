@@ -15,28 +15,14 @@ export default class Dude extends Phaser.Sprite
     {
         super(game, x, y, asset);
 
-        this.game.physics.enable(this, Phaser.Physics.ARCADE);
-
         this.jumpTimer = 0;
 
-        this.health = 10;
-        this.maxHealth = this.health;
-
-        this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-        this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-        this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-        this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+        this.setHealth(10);
+        this.setControls();
 
         this.bullets = new Bullets(this.game);
 
-        this.bullets.fireRate = 100;
-        this.bullets.nextFire = 0;
-
-        this.body.gravity.y = 1000;
-        this.body.maxVelocity.y = 500;
-        this.body.bounce.y = 0.2;
-        this.body.collideWorldBounds = true;
+        this.setPhysics();
     }
 
     update()
@@ -45,7 +31,7 @@ export default class Dude extends Phaser.Sprite
         {
             if (this.game.input.activePointer.isDown)
             {
-                this.fire();
+                this.bullets.fire(this.x, this.y);
             }
 
             if (this.upKey.isDown)
@@ -71,18 +57,29 @@ export default class Dude extends Phaser.Sprite
         }
     }
 
-    fire()
+    setHealth(health)
     {
-        if (this.game.time.now > this.bullets.nextFire && this.bullets.countDead() > 0)
-        {
-            this.bullets.nextFire = this.game.time.now + this.bullets.fireRate;
+        this.health = health;
+        this.maxHealth = this.health;
+    }
 
-            this.bullet = this.bullets.getFirstDead();
-            this.bullet.reset(this.x, this.y);
-            this.bullet.tint = Math.random() * 0xffffff;
+    setControls()
+    {
+        this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+        this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.fKey = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
+    }
 
-            this.game.physics.arcade.moveToPointer(this.bullet, 300);
-        }
+    setPhysics()
+    {
+        this.game.physics.enable(this, Phaser.Physics.ARCADE);
+
+        this.body.gravity.y = 1000;
+        this.body.maxVelocity.y = 500;
+        this.body.bounce.y = 0.2;
+        this.body.collideWorldBounds = true;
     }
 
     damage(amount)
