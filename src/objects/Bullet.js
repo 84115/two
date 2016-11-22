@@ -14,6 +14,19 @@ export default class Bullet extends Phaser.Group
         this.nextFire = 0;
     }
 
+    update()
+    {
+        if (this.game.platforms)
+        {
+            this.game.physics.arcade.collide(this.game.platforms, this);
+        }
+
+        if (this.game.enemy)
+        {
+            this.game.physics.arcade.collide(this.game.enemy, this);
+        }
+    }
+
     fire(x, y, follow)
     {
         if (this.game.time.now > this.nextFire && this.countDead() > 0)
