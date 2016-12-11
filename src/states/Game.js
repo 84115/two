@@ -27,7 +27,23 @@ export default class GameState extends Phaser.State
 		this.platforms.setAll('body.allowGravity', false);
 		this.platforms.setAll('body.immovable', true);
 
-		this.game.camera.follow(this.dude, Phaser.Camera.FOLLOW_LOCKON);
+		this.activePlayer = this.dude;
+
+		this.cKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
+		this.cKey.onDown.add(function(){
+			if (this.activePlayer == this.dude)
+			{
+				this.activePlayer = this.enemy;
+			}
+			else
+			{
+				this.activePlayer = this.dude;
+			}
+
+			this.game.camera.follow(this.activePlayer, Phaser.Camera.FOLLOW_LOCKON);
+		}, this);
+
+		this.game.camera.follow(this.activePlayer, Phaser.Camera.FOLLOW_LOCKON);
 	}
 
 	update()
@@ -38,8 +54,8 @@ export default class GameState extends Phaser.State
 
 	render()
 	{
-	    this.game.debug.cameraInfo(this.game.camera, 32, 32);
-    	this.game.debug.spriteCoords(this.dude, 32, 500);
+	    // this.game.debug.cameraInfo(this.game.camera, 32, 32);
+    	// this.game.debug.spriteCoords(this.dude, 32, 500);
 	}
 
 }
