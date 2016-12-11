@@ -50,6 +50,7 @@ export default class GameState extends Phaser.State
 	{
 		this.game.physics.arcade.collide(this.dude, this.enemy);
     	this.game.physics.arcade.collide(this.dude, this.platforms);
+    	this.game.physics.arcade.collide(this.enemy, this.platforms);
 	}
 
 	render()
